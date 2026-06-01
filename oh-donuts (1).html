@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oh! Donuts - هنفرح قلبك</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;direction:rtl;background:#fff;color:#222;}
+
+/* ===== NAVBAR ===== */
+.navbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:72px;
+  background:rgba(30, 0, 50, 0.45);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  position:absolute;top:0;left:0;right:0;z-index:999;
+}
+.nav-links a{color:#fff;}
+.nav-links a.active{color:#E91E8C;}
+.nav-icon-btn{color:#fff;}
+.logo-placeholder{display:flex;flex-direction:column;align-items:flex-start;line-height:1.1;}
+.logo-oh{font-size:24px;font-weight:900;color:#E91E8C;letter-spacing:-1px;display:flex;align-items:center;gap:3px;}
+.logo-oh .donut-o{
+  width:28px;height:28px;border-radius:50%;border:3px solid #E91E8C;
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:#E91E8C;
+}
+.logo-donuts{font-size:11px;font-weight:800;color:#222;letter-spacing:2px;}
+.logo-sub{font-size:9px;color:#999;font-weight:500;}
+
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{text-decoration:none;color:#fff;font-size:14.5px;font-weight:600;transition:color .15s;position:relative;white-space:nowrap;}
+.nav-links a.active{color:#E91E8C;}
+.nav-links a.active::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:18px;height:2.5px;background:#E91E8C;border-radius:2px;}
+
+.nav-right{display:flex;align-items:center;gap:14px;}
+.nav-icon-btn{background:none;border:none;cursor:pointer;color:#444;display:flex;padding:4px;}
+.nav-icon-btn:hover{color:#E91E8C;}
+.cart-btn{
+  background:#E91E8C;color:#fff;border:none;border-radius:50px;
+  padding:9px 20px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;gap:7px;
+}
+.cart-btn:hover{background:#d01880;}
+.cart-count{
+  background:#fff;color:#E91E8C;border-radius:50%;
+  width:20px;height:20px;font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;overflow:hidden;
+  background:#3a0060;
+  min-height:430px;display:flex;align-items:center;
+}
+.hero-bg-img{
+  position:absolute;right:0;top:0;width:60%;height:100%;
+  object-fit:cover;object-position:left center;
+  mask-image:linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 20%, black 50%);
+  -webkit-mask-image:linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 20%, black 50%);
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to left, transparent 35%, #3a0060 65%);
+  z-index:1;
+}
+.hero-content{
+  position:relative;z-index:2;padding:55px 60px;max-width:580px;
+   margin-right:auto;
+}
+.hero-heart{color:#E91E8C;font-size:22px;margin-bottom:4px;}
+.hero-title{font-size:50px;font-weight:900;color:#fff;line-height:1.25;margin-bottom:30px;}
+.hero-title .pink{color:#E91E8C;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.hero-btn-primary{
+  background:#E91E8C;color:#fff;border:none;border-radius:50px;
+  padding:13px 28px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;gap:8px;
+  box-shadow:0 6px 20px rgba(233,30,140,0.45);transition:transform .15s;
+}
+.hero-btn-primary:hover{transform:translateY(-2px);}
+.hero-btn-outline{
+  background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.65);
+  border-radius:50px;padding:11px 26px;font-family:'Cairo',sans-serif;font-size:15px;
+  font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .15s;
+}
+.hero-btn-outline:hover{border-color:#fff;background:rgba(255,255,255,0.08);}
+.hero-dots{
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  display:flex;gap:7px;z-index:3;
+}
+.hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:all .2s;}
+.hero-dot.active{background:#E91E8C;width:22px;border-radius:4px;}
+
+/* ===== CATEGORIES ===== */
+.categories{padding:34px 40px;background:#fff;border-bottom:1px solid #f0f0f0;}
+.cat-grid{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.cat-item{display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;flex:1;min-width:90px;max-width:160px;}
+.cat-icon-wrap{
+  width:88px;height:88px;border-radius:50%;background:#fff5f8;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .2s,box-shadow .2s;border:1.5px solid #fce8f0;
+}
+.cat-icon-wrap img{width:52px;height:52px;object-fit:contain;}
+.cat-emoji{font-size:40px;line-height:1;}
+.cat-item:hover .cat-icon-wrap{transform:translateY(-4px);box-shadow:0 8px 20px rgba(233,30,140,0.15);}
+.cat-label{font-size:13.5px;font-weight:700;color:#222;text-align:center;}
+
+/* ===== SECTION TITLE ===== */
+.section-title-wrap{text-align:center;padding:34px 40px 14px;}
+.section-title-wrap h2{font-size:27px;font-weight:800;color:#222;display:inline-flex;align-items:center;gap:10px;}
+
+/* ===== PRODUCTS ===== */
+.products-wrap{position:relative;padding-bottom:32px;}
+.slider-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:42px;height:42px;border-radius:50%;background:#E91E8C;color:#fff;
+  border:none;cursor:pointer;font-size:16px;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(233,30,140,0.4);transition:background .15s;
+}
+.slider-btn:hover{background:#d01880;}
+.slider-btn.sl-left{left:14px;}
+.slider-btn.sl-right{right:14px;}
+.products-track{
+  display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;
+  padding:8px 60px 12px;scrollbar-width:none;
+}
+.products-track::-webkit-scrollbar{display:none;}
+.product-card{
+  min-width:210px;max-width:210px;background:#fff;border-radius:16px;
+  box-shadow:0 2px 16px rgba(0,0,0,0.08);padding:14px 14px 18px;
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;transition:transform .2s,box-shadow .2s;flex-shrink:0;
+}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,0.12);}
+.badge-most{
+  position:absolute;top:11px;right:11px;
+  background:#E91E8C;color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:8px;
+}
+.fav-btn{
+  position:absolute;top:11px;left:11px;
+  width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid #eee;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:#ccc;
+}
+.fav-btn.active,.fav-btn:hover{color:#E91E8C;}
+.product-img{width:155px;height:135px;object-fit:contain;margin-bottom:8px;}
+.product-img-ph{width:155px;height:135px;display:flex;align-items:center;justify-content:center;font-size:68px;margin-bottom:8px;}
+.product-name{font-size:15px;font-weight:700;color:#222;margin-bottom:4px;text-align:center;}
+.product-price{font-size:14px;color:#222;margin-bottom:14px;display:flex;align-items:baseline;gap:4px;}
+.product-price strong{font-weight:800;font-size:15px;}
+.product-price span{color:#888;font-size:13px;}
+.add-btn{
+  background:#E91E8C;color:#fff;border:none;border-radius:50px;
+  padding:9px 0;width:100%;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:background .15s;
+}
+.add-btn:hover{background:#d01880;}
+
+/* ===== BOX BUILDER ===== */
+.box-section{
+  display:grid;
+  grid-template-columns:1fr 1.1fr 1fr;
+  grid-template-areas: "right center left";
+  align-items:center;
+  background:#360066;
+  border-radius:20px;
+  margin:24px 40px;
+  overflow:hidden;
+  min-height:380px;
+  padding:40px;
+  gap:30px;
+  position:relative;
+}
+.box-left{
+  grid-area:left;
+  text-align:right;
+  border:none;
+  padding:36px;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.box-center{
+  grid-area:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+}
+.box-right{
+  grid-area:right;
+  text-align:right;
+  border:none;
+  padding:28px 32px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:14px;
+}
+.box-title{font-size:48px;font-weight:900;line-height:1.2;margin-bottom:16px;}
+.box-title .pink{color:#E91E8C;}
+.box-desc{color:rgba(255,255,255,0.72);font-size:14px;line-height:1.75;margin-bottom:28px;}
+.box-start-btn{
+  background:#E91E8C;color:#fff;border:none;border-radius:50px;
+  padding:14px 32px;font-family:'Cairo',sans-serif;font-size:16px;font-weight:700;
+  cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:transform .15s;
+}
+.box-start-btn:hover{transform:translateY(-2px);}
+.box-img-ph{
+  width:200px;height:180px;background:rgba(255,255,255,0.06);border-radius:16px;
+  border:1.5px solid rgba(233,30,140,0.3);display:flex;align-items:center;
+  justify-content:center;font-size:56px;flex-direction:column;gap:6px;
+}
+.box-img-ph small{font-size:10px;color:rgba(255,255,255,0.4);}
+.config-label{font-size:12.5px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:8px;}
+.pieces-row{display:flex;gap:9px;margin-bottom:2px;}
+.piece-btn{
+  background:rgba(255,255,255,0.1);color:#fff;border:1.5px solid rgba(255,255,255,0.2);
+  border-radius:11px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:13.5px;
+  font-weight:700;cursor:pointer;transition:all .15s;
+}
+.piece-btn.active,.piece-btn:hover{background:#E91E8C;border-color:#E91E8C;}
+.flavors-row{display:flex;gap:9px;align-items:center;}
+.flavor-dot{
+  width:40px;height:40px;border-radius:50%;cursor:pointer;
+  border:2.5px solid transparent;transition:all .15s;flex-shrink:0;
+}
+.flavor-dot.sel{border-color:#E91E8C;box-shadow:0 0 0 2px rgba(233,30,140,0.25);}
+.flavor-add{
+  width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);
+  border:1.5px solid rgba(255,255,255,0.2);color:#fff;font-size:20px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;
+}
+.box-footer-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px;}
+.box-price{font-size:22px;font-weight:900;color:#fff;}
+.add-box-btn{
+  background:#E91E8C;color:#fff;border:none;border-radius:50px;
+  padding:10px 18px;font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.add-box-btn:hover{background:#d01880;}
+
+/* ===== FEATURES ===== */
+.features{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:36px 60px;
+  background:#fff;
+  border-top:1px solid #f0f0f0;
+  border-bottom:1px solid #f0f0f0;
+}
+.feature-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:8px 20px;
+  justify-content:center;
+  border:none;
+}
+.feature-item+.feature-item{
+  border-right:1px solid #f0f0f0;
+}
+.feature-icon{
+  font-size:38px;
+  flex-shrink:0;
+  color:#E91E8C;
+}
+.feature-text strong{
+  display:block;
+  font-size:15px;
+  font-weight:800;
+  color:#222;
+}
+.feature-text span{
+  font-size:12px;
+  color:#999;
+}
+
+/* ===== FOOTER ===== */
+footer{background:#170028;color:#fff;padding:46px 60px 26px;}
+.footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:36px;margin-bottom:30px;}
+.footer-col h4{font-size:15px;font-weight:800;color:#E91E8C;margin-bottom:14px;}
+.footer-contact-row{display:flex;align-items:center;gap:9px;margin-bottom:9px;font-size:13.5px;color:rgba(255,255,255,0.8);}
+.footer-contact-icon{font-size:19px;}
+.footer-col p{font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:7px;display:flex;align-items:flex-start;gap:7px;line-height:1.6;}
+.social-row{display:flex;gap:10px;margin-top:12px;}
+.social-btn{
+  width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,0.8);font-size:13px;font-weight:700;cursor:pointer;
+  border:none;transition:background .15s;text-decoration:none;
+}
+.social-btn:hover{background:#E91E8C;}
+.footer-store-ph{
+  width:165px;height:105px;background:#260040;border-radius:11px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border:1px solid rgba(233,30,140,0.2);gap:5px;font-size:26px;margin-top:8px;
+}
+.footer-store-ph small{font-size:9.5px;color:rgba(255,255,255,0.35);}
+.footer-logo-col{display:flex;align-items:center;justify-content:center;}
+.footer-logo-badge{
+  width:78px;height:78px;border-radius:50%;background:#E91E8C;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2;
+}
+.footer-logo-badge .fl-oh{font-size:17px;font-weight:900;color:#fff;}
+.footer-logo-badge .fl-d{font-size:9px;font-weight:800;color:#fff;letter-spacing:.5px;}
+.footer-logo-badge .fl-s{font-size:8px;color:rgba(255,255,255,0.7);}
+.footer-copy{text-align:center;font-size:12px;color:rgba(255,255,255,0.3);padding-top:18px;border-top:1px solid rgba(255,255,255,0.08);}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .navbar{padding:0 24px;}
+  .nav-links{gap:18px;}
+  .hero-content{padding:44px 36px;}
+  .hero-title{font-size:40px;}
+  .box-section{grid-template-columns:1fr 1fr;grid-template-rows:auto auto;}
+  .box-center{grid-row:1;grid-column:2;}
+  .box-right{grid-row:2;grid-column:1/3;border-top:1px solid rgba(255,255,255,0.1);}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
+  .features{gap:0;}
+}
+@media(max-width:768px){
+  .navbar{padding:0 16px;height:64px;}
+  .nav-links{display:none;}
+  .logo-oh{font-size:20px;}
+  .hero{min-height:340px;}
+  .hero-bg-img{width:100%;opacity:0.35;}
+  .hero-overlay{background:linear-gradient(to left,rgba(58,0,96,0.85) 0%,#3a0060 60%);}
+  .hero-content{padding:36px 24px;max-width:100%;}
+  .hero-title{font-size:32px;}
+  .hero-btn-primary,.hero-btn-outline{font-size:13px;padding:10px 18px;}
+  .categories{padding:24px 16px;}
+  .cat-icon-wrap{width:72px;height:72px;}
+  .cat-emoji{font-size:32px;}
+  .cat-label{font-size:12px;}
+  .section-title-wrap{padding:24px 16px 10px;}
+  .section-title-wrap h2{font-size:22px;}
+  .products-track{padding:8px 24px 12px;}
+  .slider-btn.sl-left{left:4px;}
+  .slider-btn.sl-right{right:4px;}
+  .box-section{margin:8px 16px 28px;grid-template-columns:1fr;grid-template-rows:auto;}
+  .box-center{display:none;}
+  .box-right{grid-row:auto;grid-column:auto;padding:20px 24px;}
+  .box-left{padding:28px 24px;}
+  .box-title{font-size:26px;}
+  .features{grid-template-columns:repeat(2,1fr);padding:16px;}
+  .feature-item{flex-direction:column;text-align:center;gap:8px;padding:14px 8px;}
+  .feature-item+.feature-item{border-right:none;}
+  .feature-item:nth-child(1),.feature-item:nth-child(2){border-bottom:1px solid #f0f0f0;}
+  .feature-item:nth-child(odd){border-left:1px solid #f0f0f0;}
+  footer{padding:36px 20px 20px;}
+  .footer-grid{grid-template-columns:1fr;gap:24px;}
+  .footer-logo-col{justify-content:flex-start;}
+  .cart-btn span:not(.cart-count){display:none;}
+}
+@media(max-width:480px){
+  .hero-title{font-size:26px;}
+  .hero-btns{flex-direction:column;gap:10px;align-items:flex-start;}
+  .cat-grid{gap:6px;}
+  .cat-item{min-width:80px;}
+  .product-card{min-width:180px;max-width:180px;}
+  .product-img,.product-img-ph{width:130px;height:115px;}
+}
+.oh-circle{
+  color:#E91E8C;
+  font-weight:900;
+  font-size:inherit;
+  border:3px solid #E91E8C;
+  border-radius:50%;
+  padding:0 8px;
+  display:inline;
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-right">
+   
+    <button class="cart-btn">
+      السلة
+      <span class="cart-count">0</span>
+      🛒
+    </button>
+     <button class="nav-icon-btn">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-icon-btn">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </button>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#" class="active">الرئيسية</a></li>
+    <li><a href="#">المنيو</a></li>
+    <li><a href="#">العروض</a></li>
+    <li><a href="#">بوكسات</a></li>
+    <li><a href="#">المتاجر</a></li>
+    <li><a href="#">تواصل معنا</a></li>
+  </ul>
+
+  <div class="logo-placeholder">
+    <img src="images/logo.jpg" alt="Oh Donuts Logo" style="height:55px;width:auto;">
+  </div>
+</nav>
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-bg-img" src="hero.png" alt="Hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">
+  هنفرح قلبك مع<br>
+  <span class="pink">O</span>H! Donuts
+</h1>
+    <div class="hero-btns">
+      <button class="hero-btn-outline">📋 تصفح المنيو</button>
+            <button class="hero-btn-primary">🛵 اطلب الآن</button>
+
+    </div>
+  </div>
+  <div class="hero-dots">
+    <div class="hero-dot active"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories">
+  <div class="cat-grid">
+    <div class="cat-item"><div class="cat-icon-wrap"><img src="images/cat-donut.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><span class="cat-label">الدونات</span></div>
+    <div class="cat-item"><div class="cat-icon-wrap"><img src="images/cat-coffee.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><span class="cat-label">القهوة الساخنة</span></div>
+    <div class="cat-item"><div class="cat-icon-wrap"><img src="images/cat-cold.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><span class="cat-label">المشروبات الباردة</span></div>
+    <div class="cat-item"><div class="cat-icon-wrap"><img src="images/cat-sweets.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><span class="cat-label">الحلويات</span></div>
+    <div class="cat-item"><div class="cat-icon-wrap"><img src="images/cat-box.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><span class="cat-label">البوكسات</span></div>
+    <div class="cat-item"><div class="cat-icon-wrap"><img src="images/cat-croissant.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div><span class="cat-label">الكرواسون</span></div>
+  </div>
+</section>
+
+<!-- MOST ORDERED -->
+<div class="section-title-wrap">
+ <h2 style="display:flex;align-items:center;justify-content:center;gap:10px;font-size:28px;font-weight:900;color:#222;">
+  الأكثر طلباً
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="#E91E8C"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/></svg>
+</h2>
+</div>
+<div class="products-wrap">
+  <button class="slider-btn sl-left" id="prevBtn">❮</button>
+  <div class="products-track" id="track">
+    <div class="product-card">
+      <div class="badge-most">الأكثر طلباً</div>
+      <button class="fav-btn" onclick="toggleFav(this)">♡</button>
+      <img src="images/donut_nuttella.jpg" class="product-img-ph" style="object-fit:contain;background:none;">
+      <div class="product-name">دونات نوتيلا</div>
+      <div class="product-price"><strong>60</strong><span>EGP</span></div>
+      <button class="add-btn">+ أضف للسلة</button>
+    </div>
+    <div class="product-card">
+      <button class="fav-btn" onclick="toggleFav(this)">♡</button>
+      <img src="images/brownies.jpg" class="product-img-ph" style="object-fit:contain;background:none;">
+      <div class="product-name">براونيز</div>
+      <div class="product-price"><strong>90</strong><span>EGP</span></div>
+      <button class="add-btn">+ أضف للسلة</button>
+    </div>
+    <div class="product-card">
+      <button class="fav-btn" onclick="toggleFav(this)">♡</button>
+      <img src="images/cinamon.jpg" class="product-img-ph" style="object-fit:contain;background:none;">
+      <div class="product-name">سينامون</div>
+      <div class="product-price"><strong>90</strong><span>EGP</span></div>
+      <button class="add-btn">+ أضف للسلة</button>
+    </div>
+    <div class="product-card">
+      <button class="fav-btn" onclick="toggleFav(this)">♡</button>
+      <img src="images/cheese_cake.jpg" class="product-img-ph" style="object-fit:contain;background:none;">
+      <div class="product-name">تشيز كيك</div>
+      <div class="product-price"><strong>105</strong><span>EGP</span></div>
+      <button class="add-btn">+ أضف للسلة</button>
+    </div>
+    <div class="product-card">
+      <button class="fav-btn" onclick="toggleFav(this)">♡</button>
+      <img src="images/pate.jpg" class="product-img-ph" style="object-fit:contain;background:none;">
+      <div class="product-name">باتيه</div>
+      <div class="product-price"><strong>70</strong><span>EGP</span></div>
+      <button class="add-btn">+ أضف للسلة</button>
+    </div>
+  </div>
+  <button class="slider-btn sl-right" id="nextBtn">❯</button>
+</div>
+
+<!-- BOX BUILDER -->
+<div class="box-section">
+  <div class="box-left">
+    <h2 class="box-title">اعمل بوكس<br>على <span class="pink">مزاجك</span></h2>
+    <p class="box-desc">اختر عدد القطع والنكهات اللي تحبها<br>وخلّي البوكس بتاعك مخصوص ليك.</p>
+    <button class="box-start-btn">← ابدأ الآن</button>
+  </div>
+
+  <div class="box-center">
+    <img src="images/box.png" alt="صورة البوكس" style="width:100%;max-width:400px;height:400px;object-fit:cover;object-position:center;">
+  </div>
+
+  <div class="box-right">
+    <div>
+      <div class="config-label">اختر عدد القطع</div>
+      <div class="pieces-row">
+        <button class="piece-btn" onclick="selPiece(this)">4 قطع</button>
+        <button class="piece-btn active" onclick="selPiece(this)">6 قطع</button>
+        <button class="piece-btn" onclick="selPiece(this)">12 قطعة</button>
+      </div>
+    </div>
+    <div>
+      <div class="config-label">اختر النكهات</div>
+      <div class="flavors-row">
+        <div class="flavor-dot sel" onclick="this.classList.toggle('sel')">
+          <img src="images/flavour.jpg" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+        </div>
+        <div class="flavor-dot" onclick="this.classList.toggle('sel')">
+          <img src="images/flavour.jpg" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+        </div>
+        <div class="flavor-dot" onclick="this.classList.toggle('sel')">
+          <img src="images/flavour.jpg" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+        </div>
+        <div class="flavor-dot sel" onclick="this.classList.toggle('sel')">
+          <img src="images/flavour.jpg" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+        </div>
+        <div class="flavor-dot" onclick="this.classList.toggle('sel')">
+          <img src="images/flavour.jpg" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+        </div>
+        <div class="flavor-add">+</div>
+      </div>
+    </div>
+    <div class="box-footer-row">
+      <div class="box-price">120 EGP</div>
+      <button class="add-box-btn">🛒 أضف للسلة ←</button>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="feature-item">
+    <div class="feature-text"><strong>توصيل سريع</strong><span>لحد باب بيتك</span></div>
+    <div class="feature-icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+    </div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-text"><strong>منتجات طازجة</strong><span>يومياً</span></div>
+    <div class="feature-icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 8v4l3 3"/></svg>
+    </div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-text"><strong>جودة مضمونة</strong><span>100%</span></div>
+    <div class="feature-icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+    </div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-text"><strong>طرق دفع متعددة</strong><span>آمنة وسهلة</span></div>
+    <div class="feature-icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>تواصل معنا</h4>
+      <div class="footer-contact-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        01211664420
+      </div>
+      <div class="footer-contact-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        0452162999
+      </div>
+      <div class="social-row">
+        <a class="social-btn" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a class="social-btn" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a class="social-btn" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.27 8.27 0 0 0 4.84 1.55V6.79a4.85 4.85 0 0 1-1.07-.1z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>ساعات العمل</h4>
+      <div class="footer-contact-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        من 9:00 صباحاً
+      </div>
+      <div class="footer-contact-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        حتى 1:00 بمنتصف الليل
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>فروعنا</h4>
+      <div class="footer-contact-row" style="align-items:flex-start;margin-bottom:14px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>كفر الداوار - شارع الحدايق - تقاطع شارع المستقبل</span>
+      </div>
+      <div class="footer-contact-row" style="align-items:flex-start;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E91E8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>دمنهور - مول إيليت بلازا - أمام نادي التجديف - الكورنيش</span>
+      </div>
+    </div>
+
+    <div class="footer-logo-col">
+      <div class="footer-logo-badge">
+        <div class="fl-oh">OH!</div>
+        <div class="fl-d">DONUTS</div>
+        <div class="fl-s">هنفرح قلبك</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copy">جميع الحقوق محفوظة © 2024 Oh! Donuts.</div>
+</footer>
+<script>
+const track=document.getElementById('track');
+document.getElementById('prevBtn').onclick=()=>track.scrollBy({left:230,behavior:'smooth'});
+document.getElementById('nextBtn').onclick=()=>track.scrollBy({left:-230,behavior:'smooth'});
+function toggleFav(b){b.classList.toggle('active');b.textContent=b.classList.contains('active')?'♥':'♡';}
+function selPiece(b){document.querySelectorAll('.piece-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');}
+document.querySelectorAll('.hero-dot').forEach(d=>{d.onclick=()=>{document.querySelectorAll('.hero-dot').forEach(x=>x.classList.remove('active'));d.classList.add('active');}});
+</script>
+</body>
+</html>
